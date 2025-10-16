@@ -74,7 +74,7 @@ java -jar xml-sanitizer/build/libs/xml-sanitizer-0.0.1-SNAPSHOT.jar
 
 ## Next Steps
 
-- [Getting Started](/guides/getting-started)
-- [System Architecture](/architecture/overview)
-- [Intelligent Mapping Generator](/intelligent-mapping-generator/overview)
-- [Back to Overview](/intro)
+- [Getting Started](/docs/guides/getting-started)
+- [System Architecture](/docs/architecture/overview)
+- [Intelligent Mapping Generator](/docs/intelligent-mapping-generator/overview)
+- [Back to Overview](/)

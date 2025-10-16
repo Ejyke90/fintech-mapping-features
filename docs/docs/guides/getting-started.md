@@ -148,10 +148,35 @@ Expected response:
 
 ### Access Swagger UI
 
-Open in your browser:
+Open your browser and visit:
 
-- **XML Sanitizer**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- **Mapping Generator**: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+- **XML Sanitizer**: http://localhost:8080/swagger-ui.html
+- **Mapping Generator**: http://localhost:8081/swagger-ui.html
+
+## Running Documentation Locally
+
+To run this documentation site locally for development:
+
+### Install Dependencies
+```bash
+cd /Users/ejikeudeze/AI_Projects/fintech-mapping-features/docs
+npm install
+```
+
+### Start Development Server
+```bash
+cd /Users/ejikeudeze/AI_Projects/fintech-mapping-features/docs && npm start
+```
+
+The documentation site will open at: http://localhost:3000/fintech-mapping-features/
+
+### Build for Production
+```bash
+cd docs
+npm run build
+```
+
+The static files will be generated in the `docs/build` directory.
 
 ## Testing the APIs
 
@@ -240,10 +265,10 @@ export JAVA_HOME=/path/to/java21
 Congratulations! 🎉 You now have the services running locally.
 
 Continue with:
-- [System Architecture](/architecture/overview)
-- [Intelligent Mapping Generator](/intelligent-mapping-generator/overview)
-- [XML Sanitizer](/xml-sanitizer/overview)
-- [Back to Overview](/intro)
+- [System Architecture](/docs/architecture/overview)
+- [Intelligent Mapping Generator](/docs/intelligent-mapping-generator/overview)
+- [XML Sanitizer](/docs/xml-sanitizer/overview)
+- [Back to Overview](/)
 
 ## Need Help?
 
