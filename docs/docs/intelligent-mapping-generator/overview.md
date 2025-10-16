@@ -124,7 +124,7 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 ## Next Steps
 
-- [API Reference](/docs/intelligent-mapping-generator/api) - Complete API documentation
-- [ISO 20022 Guide](/docs/guides/iso20022) - Working with ISO 20022 messages
-- [ActiveMQ Configuration](/docs/intelligent-mapping-generator/artemis) - Message broker setup
-- [Examples](/docs/intelligent-mapping-generator/examples) - Usage examples
+- [Getting Started](/guides/getting-started)
+- [System Architecture](/architecture/overview)
+- [XML Sanitizer](/xml-sanitizer/overview)
+- [Back to Overview](/intro)

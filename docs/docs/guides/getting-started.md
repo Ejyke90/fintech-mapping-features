@@ -237,12 +237,13 @@ export JAVA_HOME=/path/to/java21
 
 ## Next Steps
 
-Now that your environment is set up:
+Congratulations! 🎉 You now have the services running locally.
 
-- 📘 [Explore the Architecture](/docs/architecture/overview)
-- 🔌 [Read the API Documentation](/docs/xml-sanitizer/overview)
-- 🚀 [Learn about Deployment](/docs/deployment/local-development)
-- 📝 [Contributing Guidelines](/docs/guides/contributing)
+Continue with:
+- [System Architecture](/architecture/overview)
+- [Intelligent Mapping Generator](/intelligent-mapping-generator/overview)
+- [XML Sanitizer](/xml-sanitizer/overview)
+- [Back to Overview](/intro)
 
 ## Need Help?
 

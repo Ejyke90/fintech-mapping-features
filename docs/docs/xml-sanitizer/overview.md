@@ -74,6 +74,7 @@ java -jar xml-sanitizer/build/libs/xml-sanitizer-0.0.1-SNAPSHOT.jar
 
 ## Next Steps
 
-- [API Reference](/docs/xml-sanitizer/api) - Complete API documentation
-- [Configuration Guide](/docs/xml-sanitizer/configuration) - Advanced configuration
-- [Examples](/docs/xml-sanitizer/examples) - Usage examples
+- [Getting Started](/guides/getting-started)
+- [System Architecture](/architecture/overview)
+- [Intelligent Mapping Generator](/intelligent-mapping-generator/overview)
+- [Back to Overview](/intro)

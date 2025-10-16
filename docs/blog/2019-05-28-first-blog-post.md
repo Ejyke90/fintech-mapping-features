@@ -35,4 +35,4 @@ This automatically generates OpenAPI 3.0 specifications at `/v3/api-docs` and pr
 ✅ **Developer Experience** - Easy to explore and understand APIs  
 ✅ **CI/CD Integration** - Deployed automatically with GitHub Actions
 
-Check out our [API Documentation](/docs/xml-sanitizer/api) to see it in action!
+Check out our [API Documentation](/xml-sanitizer/overview) to see it in action!
