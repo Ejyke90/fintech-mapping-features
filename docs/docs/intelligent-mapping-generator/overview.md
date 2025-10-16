@@ -124,7 +124,7 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 ## Next Steps
 
-- [Getting Started](/guides/getting-started)
-- [System Architecture](/architecture/overview)
-- [XML Sanitizer](/xml-sanitizer/overview)
-- [Back to Overview](/intro)
+- [Getting Started](/docs/guides/getting-started)
+- [System Architecture](/docs/architecture/overview)
+- [XML Sanitizer](/docs/xml-sanitizer/overview)
+- [Back to Overview](/)

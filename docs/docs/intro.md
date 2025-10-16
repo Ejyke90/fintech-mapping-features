@@ -57,3 +57,18 @@ Each microservice provides interactive API documentation via Swagger UI:
 
 - **XML Sanitizer**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 - **Mapping Generator**: [http://localhost:8081/swagger-ui.html](http://localhost:8081/swagger-ui.html)
+
+## 📖 Running This Documentation Site Locally
+
+To run this documentation website on your local machine:
+
+```bash
+cd /Users/ejikeudeze/AI_Projects/fintech-mapping-features/docs && npm start
+```
+
+The site will be available at: [http://localhost:3000/fintech-mapping-features/](http://localhost:3000/fintech-mapping-features/)
+
+### Build Documentation for Production
+```bash
+cd docs && npm run build
+```
