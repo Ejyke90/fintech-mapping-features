@@ -1,1 +1,4 @@
-rootProject.name = 'fintech-ai-features'
+rootProject.name = 'fintech-mapping-features'
+
+include 'xml-sanitizer'
+include 'intelligent-mapping-generator'

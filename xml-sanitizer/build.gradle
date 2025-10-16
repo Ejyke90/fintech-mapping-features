@@ -1,0 +1,13 @@
+// xml-sanitizer module specific configuration
+springBoot {
+    mainClass = 'com.fintech.sanitizer.XmlSanitizerApplication'
+}
+
+bootJar {
+    archiveBaseName = 'xml-sanitizer'
+    archiveVersion = '0.0.1-SNAPSHOT'
+}
+
+jar {
+    enabled = false
+}

@@ -1,0 +1,13 @@
+// intelligent-mapping-generator module specific configuration
+springBoot {
+    mainClass = 'com.fintech.mapping.MappingGeneratorApplication'
+}
+
+bootJar {
+    archiveBaseName = 'intelligent-mapping-generator'
+    archiveVersion = '0.0.1-SNAPSHOT'
+}
+
+jar {
+    enabled = false
+}
