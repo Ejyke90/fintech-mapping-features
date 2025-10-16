@@ -1,0 +1,106 @@
+name: Intelligent Mapping Generator CI
+
+on:
+  push:
+    branches: [ main, develop, intelligentMappingPoC ]
+    paths:
+      - 'intelligent-mapping-generator/**'
+      - 'schemas/**'
+      - '.github/workflows/intelligent-mapping-generator-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'intelligent-mapping-generator/**'
+      - 'schemas/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & Test Intelligent Mapping Generator
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    - name: Verify Java Installation
+      run: |
+        echo "JAVA_HOME: $JAVA_HOME"
+        java -version
+        ./gradlew --version
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build intelligent-mapping-generator
+      run: ./gradlew :intelligent-mapping-generator:clean :intelligent-mapping-generator:build -x test --no-daemon
+      env:
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+    - name: Run tests
+      run: ./gradlew :intelligent-mapping-generator:test --no-daemon
+      continue-on-error: true
+      env:
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+    - name: Upload build artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: intelligent-mapping-generator-jar
+        path: intelligent-mapping-generator/build/libs/*.jar
+        retention-days: 7
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: intelligent-mapping-generator-test-results
+        path: |
+          intelligent-mapping-generator/build/test-results/test/*.xml
+          intelligent-mapping-generator/build/reports/tests/test/
+        retention-days: 7
+
+  docker-build:
+    runs-on: ubuntu-latest
+    name: Build Docker Image
+    needs: build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/intelligentMappingPoC')
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Extract metadata for Docker
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ejyke90/intelligent-mapping-generator
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+          type=raw,value=poc,enable=${{ github.ref == 'refs/heads/intelligentMappingPoC' }}
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: false
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          MODULE_NAME=intelligent-mapping-generator

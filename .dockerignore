@@ -1,0 +1,49 @@
+# Build outputs
+**/build/
+**/target/
+**/.gradle/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.github/
+
+# Documentation
+*.md
+!README.md
+
+# Test files
+**/test/
+**/*Test.java
+**/*Tests.java
+
+# Logs
+*.log
+
+# Local configuration
+gradle-local.properties
+
+# Archives
+*.zip
+archive_*.zip
+
+# Temporary files
+*.tmp
+*.temp

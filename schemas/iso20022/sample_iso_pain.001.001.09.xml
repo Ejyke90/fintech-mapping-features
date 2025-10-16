@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    ISO 20022 Standard pain.001.001.09 Sample
+    Base ISO Standard Implementation
+    
+    Key ISO Standard Features Demonstrated:
+    - Multiple transactions per message (batch processing)
+    - Multiple payment information blocks
+    - Flexible character set (no FIN-X restrictions)
+    - UETR optional
+    - BIC optional for all agents
+    - Country optional in party addresses
+    - Up to 7 address lines of 70 characters each
+    - Non-IBAN account identifiers supported
+    - Charge bearer includes SLEV option
+    - Payment method includes TRA option
+    - Unlimited instructions for creditor agent
+    - Multiple unstructured remittance information lines
+    - Supplementary data supported
+    - Batch booking indicator
+    - Control sum for validation
+-->
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <CstmrCdtTrfInitn>
+        <!-- Group Header -->
+        <GrpHdr>
+            <!-- Message Identification: No character restrictions -->
+            <MsgId>MSG-2025-10-16-BATCH-001</MsgId>
+            
+            <!-- Creation Date Time -->
+            <CreDtTm>2025-10-16T14:30:00</CreDtTm>
+            
+            <!-- Number of Transactions: Can be any number (1-15 digits) -->
+            <NbOfTxs>3</NbOfTxs>
+            
+            <!-- Control Sum: Optional validation field -->
+            <CtrlSum>387500.50</CtrlSum>
+            
+            <!-- Initiating Party -->
+            <InitgPty>
+                <Nm>Global Enterprises Inc. — Main Treasury</Nm>
+                <PstlAdr>
+                    <!-- Country is OPTIONAL -->
+                    <StrtNm>International Business Boulevard</StrtNm>
+                    <BldgNb>5000</BldgNb>
+                    <PstCd>94105</PstCd>
+                    <TwnNm>San Francisco</TwnNm>
+                    <CtrySubDvsn>CA</CtrySubDvsn>
+                    <Ctry>US</Ctry>
+                    <!-- Up to 7 address lines, 70 characters each -->
+                    <AdrLine>International Business Boulevard 5000, Suite 2500</AdrLine>
+                    <AdrLine>Financial District, Downtown San Francisco</AdrLine>
+                    <AdrLine>California 94105, United States of America</AdrLine>
+                </PstlAdr>
+                <Id>
+                    <OrgId>
+                        <LEI>5493000IBP32UQZ0KL24</LEI>
+                        <!-- Multiple other identifications allowed -->
+                        <Othr>
+                            <Id>US-TAX-123456789</Id>
+                            <SchmeNm>
+                                <Cd>TXID</Cd>
+                            </SchmeNm>
+                        </Othr>
+                        <Othr>
+                            <Id>DUNS-987654321</Id>
+                            <SchmeNm>
+                                <Prtry>DUNS</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </OrgId>
+                </Id>
+            </InitgPty>
+            
+            <!-- Forwarding Agent: BIC is OPTIONAL -->
+            <FwdgAgt>
+                <FinInstnId>
+                    <BICFI>CHASUS33</BICFI>
+                    <Nm>JP Morgan Chase Bank, N.A.</Nm>
+                    <!-- Other identification supported -->
+                    <Othr>
+                        <Id>FEDWIRE-021000021</Id>
+                        <SchmeNm>
+                            <Prtry>FW</Prtry>
+                        </SchmeNm>
+                    </Othr>
+                </FinInstnId>
+            </FwdgAgt>
+        </GrpHdr>
+        
+        <!-- Payment Information Block 1: High-Value International Payments -->
+        <PmtInf>
+            <!-- Payment Information Identification -->
+            <PmtInfId>PMT-INFO-2025-10-16-INTL-001</PmtInfId>
+            
+            <!-- Payment Method: CHK, TRF, or TRA -->
+            <PmtMtd>TRF</PmtMtd>
+            
+            <!-- Batch Booking: Optional indicator -->
+            <BtchBookg>true</BtchBookg>
+            
+            <!-- Number of Transactions in this payment info block -->
+            <NbOfTxs>2</NbOfTxs>
+            
+            <!-- Control Sum for this payment info block -->
+            <CtrlSum>275000.00</CtrlSum>
+            
+            <!-- Payment Type Information -->
+            <PmtTpInf>
+                <!-- Unlimited Service Levels allowed -->
+                <SvcLvl>
+                    <Cd>URGP</Cd>
+                </SvcLvl>
+                <SvcLvl>
+                    <Cd>G001</Cd>
+                </SvcLvl>
+                <SvcLvl>
+                    <Prtry>PRIORITY-PLUS</Prtry>
+                </SvcLvl>
+                <LclInstrm>
+                    <Cd>INST</Cd>
+                </LclInstrm>
+                <CtgyPurp>
+                    <Cd>INTC</Cd>
+                </CtgyPurp>
+            </PmtTpInf>
+            
+            <!-- Requested Execution Date -->
+            <ReqdExctnDt>
+                <Dt>2025-10-17</Dt>
+            </ReqdExctnDt>
+            
+            <!-- Debtor -->
+            <Dbtr>
+                <Nm>Global Enterprises Inc. — Treasury Operations</Nm>
+                <PstlAdr>
+                    <!-- All fields optional -->
+                    <AdrLine>International Business Boulevard 5000, Suite 2500</AdrLine>
+                    <AdrLine>Financial District</AdrLine>
+                    <AdrLine>San Francisco, CA 94105</AdrLine>
+                    <AdrLine>United States of America</AdrLine>
+                </PstlAdr>
+                <Id>
+                    <OrgId>
+                        <LEI>5493000IBP32UQZ0KL24</LEI>
+                        <!-- Multiple identifications -->
+                        <Othr>
+                            <Id>123-45-6789</Id>
+                            <SchmeNm>
+                                <Cd>TXID</Cd>
+                            </SchmeNm>
+                        </Othr>
+                    </OrgId>
+                </Id>
+            </Dbtr>
+            
+            <!-- Debtor Account -->
+            <DbtrAcct>
+                <Id>
+                    <!-- Non-IBAN identifiers supported -->
+                    <Othr>
+                        <Id>4000123456789012</Id>
+                        <SchmeNm>
+                            <Cd>BBAN</Cd>
+                        </SchmeNm>
+                    </Othr>
+                </Id>
+                <Ccy>USD</Ccy>
+            </DbtrAcct>
+            
+            <!-- Debtor Agent -->
+            <DbtrAgt>
+                <FinInstnId>
+                    <BICFI>CHASUS33</BICFI>
+                    <Nm>JP Morgan Chase Bank, N.A.</Nm>
+                    <PstlAdr>
+                        <AdrLine>383 Madison Avenue</AdrLine>
+                        <AdrLine>New York, NY 10179</AdrLine>
+                        <AdrLine>United States</AdrLine>
+                    </PstlAdr>
+                    <!-- Other identification supported -->
+                    <Othr>
+                        <Id>021000021</Id>
+                        <SchmeNm>
+                            <Prtry>FEDWIRE</Prtry>
+                        </SchmeNm>
+                    </Othr>
+                </FinInstnId>
+            </DbtrAgt>
+            
+            <!-- Ultimate Debtor -->
+            <UltmtDbtr>
+                <Nm>Global Enterprises Holdings LLC</Nm>
+                <PstlAdr>
+                    <!-- No mandatory fields -->
+                    <AdrLine>5000 International Business Boulevard, Corporate HQ</AdrLine>
+                    <AdrLine>San Francisco, California 94105, USA</AdrLine>
+                </PstlAdr>
+            </UltmtDbtr>
+            
+            <!-- Charge Bearer: DEBT, CRED, SHAR, or SLEV -->
+            <ChrgBr>SLEV</ChrgBr>
+            
+            <!-- Transaction 1: International Wire Transfer -->
+            <CdtTrfTxInf>
+                <PmtId>
+                    <InstrId>INSTR-2025-10-16-001</InstrId>
+                    <EndToEndId>E2E-GLOBAL-001-20251016</EndToEndId>
+                    <!-- UETR is OPTIONAL -->
+                    <UETR>a1b2c3d4-e5f6-47a8-b9c0-d1e2f3a4b5c6</UETR>
+                </PmtId>
+                
+                <PmtTpInf>
+                    <InstrPrty>HIGH</InstrPrty>
+                    <SvcLvl>
+                        <Cd>URGP</Cd>
+                    </SvcLvl>
+                </PmtTpInf>
+                
+                <Amt>
+                    <InstdAmt Ccy="USD">150000.00</InstdAmt>
+                </Amt>
+                
+                <!-- Charge Bearer: SLEV option available -->
+                <ChrgBr>SLEV</ChrgBr>
+                
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BICFI>HSBCHKHH</BICFI>
+                        <Nm>The Hongkong and Shanghai Banking Corporation Limited</Nm>
+                        <PstlAdr>
+                            <AdrLine>HSBC Main Building, 1 Queen's Road Central</AdrLine>
+                            <AdrLine>Hong Kong</AdrLine>
+                        </PstlAdr>
+                    </FinInstnId>
+                </CdtrAgt>
+                
+                <Cdtr>
+                    <Nm>Asia Pacific Suppliers Ltd. 亞太供應商有限公司</Nm>
+                    <PstlAdr>
+                        <!-- Unicode characters supported -->
+                        <AdrLine>Room 1501, 15/F, Tower A, International Commerce Centre</AdrLine>
+                        <AdrLine>1 Austin Road West, Kowloon</AdrLine>
+                        <AdrLine>Hong Kong SAR, People's Republic of China</AdrLine>
+                    </PstlAdr>
+                    <Id>
+                        <OrgId>
+                            <Othr>
+                                <Id>HK-BR-12345678</Id>
+                                <SchmeNm>
+                                    <Prtry>BUSINESS-REGISTRATION</Prtry>
+                                </SchmeNm>
+                            </Othr>
+                        </OrgId>
+                    </Id>
+                </Cdtr>
+                
+                <CdtrAcct>
+                    <Id>
+                        <!-- Non-IBAN account number -->
+                        <Othr>
+                            <Id>800-123456-001</Id>
+                            <SchmeNm>
+                                <Prtry>LOCAL-ACCOUNT</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </Id>
+                    <Ccy>HKD</Ccy>
+                </CdtrAcct>
+                
+                <!-- Unlimited instructions for creditor agent -->
+                <InstrForCdtrAgt>
+                    <Cd>PHOB</Cd>
+                    <InstrInf>Please contact beneficiary before crediting account</InstrInf>
+                </InstrForCdtrAgt>
+                <InstrForCdtrAgt>
+                    <Cd>TELI</Cd>
+                    <InstrInf>+852-1234-5678</InstrInf>
+                </InstrForCdtrAgt>
+                <InstrForCdtrAgt>
+                    <Cd>HOLD</Cd>
+                    <InstrInf>Hold for confirmation of goods receipt</InstrInf>
+                </InstrForCdtrAgt>
+                
+                <Purp>
+                    <Cd>GDDS</Cd>
+                </Purp>
+                
+                <RmtInf>
+                    <!-- Multiple unstructured remittance lines allowed -->
+                    <Ustrd>Payment for Invoice #INV-2025-0987 dated October 1, 2025</Ustrd>
+                    <Ustrd>Purchase Order: PO-GLOBAL-2025-1234</Ustrd>
+                    <Ustrd>Contract Reference: SUPPLY-AGREEMENT-2025-APAC-789</Ustrd>
+                    <Ustrd>Delivery Schedule: Q4 2025 - Monthly installments</Ustrd>
+                    <!-- Additional remittance information -->
+                    <AddtlRmtInf>VAT Registration: HK-VAT-987654321</AddtlRmtInf>
+                    <AddtlRmtInf>Terms: Net 30 days from invoice date</AddtlRmtInf>
+                    <AddtlRmtInf>Special Instructions: Rush delivery requested</AddtlRmtInf>
+                </RmtInf>
+                
+                <!-- Supplementary Data supported at transaction level -->
+                <SplmtryData>
+                    <PlcAndNm>CustomTransactionData</PlcAndNm>
+                    <Envlp>
+                        <CustomData xmlns="">
+                            <InternalReference>GLOBAL-TX-2025-001</InternalReference>
+                            <DepartmentCode>INTL-PROCUREMENT</DepartmentCode>
+                            <CostCenter>CC-5500-APAC</CostCenter>
+                            <ApproverName>John Smith</ApproverName>
+                            <ApprovalDate>2025-10-15</ApprovalDate>
+                        </CustomData>
+                    </Envlp>
+                </SplmtryData>
+            </CdtTrfTxInf>
+            
+            <!-- Transaction 2: European Payment -->
+            <CdtTrfTxInf>
+                <PmtId>
+                    <InstrId>INSTR-2025-10-16-002</InstrId>
+                    <EndToEndId>E2E-GLOBAL-002-20251016</EndToEndId>
+                    <!-- UETR can be omitted -->
+                </PmtId>
+                
+                <Amt>
+                    <InstdAmt Ccy="EUR">125000.00</InstdAmt>
+                </Amt>
+                
+                <ChrgBr>SHAR</ChrgBr>
+                
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BICFI>DEUTDEFF</BICFI>
+                        <Nm>Deutsche Bank AG</Nm>
+                    </FinInstnId>
+                </CdtrAgt>
+                
+                <Cdtr>
+                    <Nm>European Manufacturing GmbH & Co. KG</Nm>
+                    <PstlAdr>
+                        <AdrLine>Industriestraße 45-47, Gewerbegebiet Süd</AdrLine>
+                        <AdrLine>70565 Stuttgart, Baden-Württemberg</AdrLine>
+                        <AdrLine>Federal Republic of Germany</AdrLine>
+                    </PstlAdr>
+                </Cdtr>
+                
+                <CdtrAcct>
+                    <Id>
+                        <IBAN>DE89370400440532013000</IBAN>
+                    </Id>
+                </CdtrAcct>
+                
+                <Purp>
+                    <Cd>GDDS</Cd>
+                </Purp>
+                
+                <RmtInf>
+                    <Ustrd>Payment for manufacturing services - Q4 2025</Ustrd>
+                    <Ustrd>Invoice: EUR-MFG-2025-456</Ustrd>
+                </RmtInf>
+            </CdtTrfTxInf>
+        </PmtInf>
+        
+        <!-- Payment Information Block 2: Domestic Payment with Transfer Advice -->
+        <PmtInf>
+            <PmtInfId>PMT-INFO-2025-10-16-DOM-002</PmtInfId>
+            
+            <!-- Payment Method: TRA option available in ISO Standard -->
+            <PmtMtd>TRA</PmtMtd>
+            
+            <BtchBookg>false</BtchBookg>
+            
+            <NbOfTxs>1</NbOfTxs>
+            
+            <CtrlSum>112500.50</CtrlSum>
+            
+            <PmtTpInf>
+                <SvcLvl>
+                    <Cd>NURG</Cd>
+                </SvcLvl>
+                <LclInstrm>
+                    <Prtry>DOMESTIC-ACH</Prtry>
+                </LclInstrm>
+                <CtgyPurp>
+                    <Cd>CASH</Cd>
+                </CtgyPurp>
+            </PmtTpInf>
+            
+            <ReqdExctnDt>
+                <Dt>2025-10-18</Dt>
+            </ReqdExctnDt>
+            
+            <Dbtr>
+                <Nm>Global Enterprises Inc. — Payroll Division</Nm>
+                <PstlAdr>
+                    <AdrLine>5000 International Business Boulevard</AdrLine>
+                    <AdrLine>San Francisco, CA 94105</AdrLine>
+                </PstlAdr>
+            </Dbtr>
+            
+            <DbtrAcct>
+                <Id>
+                    <Othr>
+                        <Id>4000-9876-5432-1098</Id>
+                        <SchmeNm>
+                            <Cd>BBAN</Cd>
+                        </SchmeNm>
+                    </Othr>
+                </Id>
+                <Ccy>USD</Ccy>
+            </DbtrAcct>
+            
+            <DbtrAgt>
+                <FinInstnId>
+                    <BICFI>CHASUS33</BICFI>
+                    <Othr>
+                        <Id>021000021</Id>
+                        <SchmeNm>
+                            <Prtry>ABA</Prtry>
+                        </SchmeNm>
+                    </Othr>
+                </FinInstnId>
+            </DbtrAgt>
+            
+            <ChrgBr>DEBT</ChrgBr>
+            
+            <CdtTrfTxInf>
+                <PmtId>
+                    <InstrId>INSTR-2025-10-16-003</InstrId>
+                    <EndToEndId>E2E-PAYROLL-ADVANCE-001</EndToEndId>
+                </PmtId>
+                
+                <Amt>
+                    <InstdAmt Ccy="USD">112500.50</InstdAmt>
+                </Amt>
+                
+                <ChrgBr>DEBT</ChrgBr>
+                
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BICFI>BOFAUS3N</BICFI>
+                        <Nm>Bank of America, N.A.</Nm>
+                        <Othr>
+                            <Id>026009593</Id>
+                            <SchmeNm>
+                                <Prtry>ABA</Prtry>
+                            </SchmeNm>
+                        </Othr>
+                    </FinInstnId>
+                </CdtrAgt>
+                
+                <Cdtr>
+                    <Nm>Employee Benefits Trust Fund</Nm>
+                    <PstlAdr>
+                        <AdrLine>1234 Benefits Avenue, Suite 100</AdrLine>
+                        <AdrLine>Los Angeles, California 90001</AdrLine>
+                    </PstlAdr>
+                </Cdtr>
+                
+                <CdtrAcct>
+                    <Id>
+                        <Othr>
+                            <Id>5500-1122-3344-5566</Id>
+                            <SchmeNm>
+                                <Cd>BBAN</Cd>
+                            </SchmeNm>
+                        </Othr>
+                    </Id>
+                </CdtrAcct>
+                
+                <Purp>
+                    <Cd>CASH</Cd>
+                </Purp>
+                
+                <RmtInf>
+                    <Ustrd>Quarterly employee benefits contribution - Q4 2025</Ustrd>
+                    <Ustrd>Period: October 1, 2025 - December 31, 2025</Ustrd>
+                    <AddtlRmtInf>Plan Administrator: Benefits Corp LLC</AddtlRmtInf>
+                    <AddtlRmtInf>Plan Number: PLAN-2025-5678</AddtlRmtInf>
+                    <AddtlRmtInf>Employee Count: 450 active participants</AddtlRmtInf>
+                </RmtInf>
+                
+                <SplmtryData>
+                    <PlcAndNm>PayrollData</PlcAndNm>
+                    <Envlp>
+                        <PayrollInfo xmlns="">
+                            <PayPeriod>2025-Q4</PayPeriod>
+                            <EmployeeCount>450</EmployeeCount>
+                            <ContributionType>QUARTERLY</ContributionType>
+                            <ApprovalLevel>CFO</ApprovalLevel>
+                        </PayrollInfo>
+                    </Envlp>
+                </SplmtryData>
+            </CdtTrfTxInf>
+        </PmtInf>
+        
+        <!-- Supplementary Data at message level -->
+        <SplmtryData>
+            <PlcAndNm>MessageLevelData</PlcAndNm>
+            <Envlp>
+                <BatchMetadata xmlns="">
+                    <BatchID>BATCH-2025-10-16-001</BatchID>
+                    <ProcessingPriority>HIGH</ProcessingPriority>
+                    <BusinessUnit>CORPORATE-TREASURY</BusinessUnit>
+                    <ApprovalWorkflow>STANDARD-BATCH</ApprovalWorkflow>
+                    <ComplianceCheckStatus>PASSED</ComplianceCheckStatus>
+                    <SanctionsScreening>CLEARED</SanctionsScreening>
+                    <AMLReview>APPROVED</AMLReview>
+                    <RiskRating>LOW</RiskRating>
+                </BatchMetadata>
+            </Envlp>
+        </SplmtryData>
+    </CstmrCdtTrfInitn>
+</Document>
