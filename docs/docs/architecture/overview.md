@@ -197,9 +197,7 @@ Both services expose Spring Boot Actuator endpoints:
 
 ## Next Steps
 
-## Next Steps
-
-- [Getting Started](/docs/guides/getting-started)
-- [Intelligent Mapping Generator](/docs/intelligent-mapping-generator/overview)
-- [XML Sanitizer](/docs/xml-sanitizer/overview)
+- [Getting Started](../guides/getting-started)
+- [Intelligent Mapping Generator](../intelligent-mapping-generator/overview)
+- [XML Sanitizer](../xml-sanitizer/overview)
 - [Back to Overview](/)
