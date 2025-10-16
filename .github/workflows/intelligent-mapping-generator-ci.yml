@@ -29,19 +29,25 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
+    - name: Verify Java Installation
+      run: |
+        echo "JAVA_HOME: $JAVA_HOME"
+        java -version
+        ./gradlew --version
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
     - name: Build intelligent-mapping-generator
-      run: ./gradlew :intelligent-mapping-generator:clean :intelligent-mapping-generator:build -x test
+      run: ./gradlew :intelligent-mapping-generator:clean :intelligent-mapping-generator:build -x test --no-daemon
       env:
-        GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.java.home=$JAVA_HOME"
 
     - name: Run tests
-      run: ./gradlew :intelligent-mapping-generator:test
+      run: ./gradlew :intelligent-mapping-generator:test --no-daemon
       continue-on-error: true
       env:
-        GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.java.home=$JAVA_HOME"
 
     - name: Upload build artifacts
       if: success()
