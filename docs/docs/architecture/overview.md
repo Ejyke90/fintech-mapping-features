@@ -197,6 +197,9 @@ Both services expose Spring Boot Actuator endpoints:
 
 ## Next Steps
 
-- [Deployment Guide](/docs/deployment/local-development)
-- [Configuration Reference](/docs/guides/configuration)
-- [ISO 20022 Integration](/docs/guides/iso20022)
+## Next Steps
+
+- [Getting Started](/guides/getting-started)
+- [Intelligent Mapping Generator](/intelligent-mapping-generator/overview)
+- [XML Sanitizer](/xml-sanitizer/overview)
+- [Back to Overview](/intro)
