@@ -265,12 +265,11 @@ export JAVA_HOME=/path/to/java21
 Congratulations! 🎉 You now have the services running locally.
 
 Continue with:
-- [System Architecture](/docs/architecture/overview)
-- [Intelligent Mapping Generator](/docs/intelligent-mapping-generator/overview)
-- [XML Sanitizer](/docs/xml-sanitizer/overview)
+- [System Architecture](../architecture/overview)
+- [Intelligent Mapping Generator](../intelligent-mapping-generator/overview)
+- [XML Sanitizer](../xml-sanitizer/overview)
 - [Back to Overview](/)
 
 ## Need Help?
 
-- Check the [Troubleshooting Guide](/docs/guides/troubleshooting)
 - Open an issue on [GitHub](https://github.com/Ejyke90/fintech-mapping-features/issues)

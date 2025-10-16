@@ -48,7 +48,7 @@ curl -X POST http://localhost:8080/sanitize-chars \
 
 ## API Endpoints
 
-The service exposes RESTful endpoints for XML sanitization. See the [API Reference](/docs/xml-sanitizer/api) for complete documentation.
+The service exposes RESTful endpoints for XML sanitization. API documentation will be available at `/swagger-ui.html` when the service is running.
 
 ## Configuration
 
@@ -74,7 +74,7 @@ java -jar xml-sanitizer/build/libs/xml-sanitizer-0.0.1-SNAPSHOT.jar
 
 ## Next Steps
 
-- [Getting Started](/docs/guides/getting-started)
-- [System Architecture](/docs/architecture/overview)
-- [Intelligent Mapping Generator](/docs/intelligent-mapping-generator/overview)
+- [Getting Started](../guides/getting-started)
+- [System Architecture](../architecture/overview)
+- [Intelligent Mapping Generator](../intelligent-mapping-generator/overview)
 - [Back to Overview](/)
