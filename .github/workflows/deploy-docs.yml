@@ -1,0 +1,112 @@
+name: Deploy Documentation to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+      
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
+      
+      - name: Grant Execute Permission to Gradlew
+        run: chmod +x ./gradlew
+      
+      - name: Build Spring Boot Microservices
+        run: ./gradlew build -x test
+      
+      - name: Start XML Sanitizer Service
+        run: |
+          ./gradlew :xml-sanitizer:bootRun > xml-sanitizer.log 2>&1 &
+          echo $! > xml-sanitizer.pid
+      
+      - name: Start Mapping Generator Service
+        run: |
+          ./gradlew :intelligent-mapping-generator:bootRun > mapping-generator.log 2>&1 &
+          echo $! > mapping-generator.pid
+      
+      - name: Wait for Services to Start
+        run: |
+          echo "Waiting for services to start..."
+          sleep 45
+          
+          echo "Checking XML Sanitizer..."
+          curl -f http://localhost:8080/v3/api-docs || (cat xml-sanitizer.log && exit 1)
+          
+          echo "Checking Mapping Generator..."
+          curl -f http://localhost:8081/v3/api-docs || (cat mapping-generator.log && exit 1)
+      
+      - name: Create OpenAPI Specs Directory
+        run: mkdir -p openapi-specs
+      
+      - name: Download OpenAPI Specifications
+        run: |
+          curl -o openapi-specs/xml-sanitizer-openapi.json http://localhost:8080/v3/api-docs
+          curl -o openapi-specs/mapping-generator-openapi.json http://localhost:8081/v3/api-docs
+          
+          echo "XML Sanitizer OpenAPI Spec:"
+          cat openapi-specs/xml-sanitizer-openapi.json
+          
+          echo "Mapping Generator OpenAPI Spec:"
+          cat openapi-specs/mapping-generator-openapi.json
+      
+      - name: Stop Spring Boot Services
+        run: |
+          if [ -f xml-sanitizer.pid ]; then
+            kill $(cat xml-sanitizer.pid) || true
+          fi
+          if [ -f mapping-generator.pid ]; then
+            kill $(cat mapping-generator.pid) || true
+          fi
+      
+      - name: Install Docusaurus Dependencies
+        run: cd docs && npm ci
+      
+      - name: Generate API Documentation from OpenAPI Specs
+        run: cd docs && npm run gen-api-docs || echo "Skipping API docs generation"
+      
+      - name: Build Docusaurus Site
+        run: cd docs && npm run build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+      
+      - name: Upload Build Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/build
+      
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/deploy-pages@v4
