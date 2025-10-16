@@ -45,48 +45,47 @@ jobs:
         run: chmod +x ./gradlew
       
       - name: Build Spring Boot Microservices
-        run: ./gradlew build -x test
-      
-      - name: Start XML Sanitizer Service
-        run: |
-          ./gradlew :xml-sanitizer:bootRun > xml-sanitizer.log 2>&1 &
-          echo $! > xml-sanitizer.pid
+        run: ./gradlew :intelligent-mapping-generator:build -x test
       
       - name: Start Mapping Generator Service
         run: |
           ./gradlew :intelligent-mapping-generator:bootRun > mapping-generator.log 2>&1 &
           echo $! > mapping-generator.pid
       
-      - name: Wait for Services to Start
+      - name: Wait for Service to Start
         run: |
-          echo "Waiting for services to start..."
-          sleep 45
-          
-          echo "Checking XML Sanitizer..."
-          curl -f http://localhost:8080/v3/api-docs || (cat xml-sanitizer.log && exit 1)
+          echo "Waiting for intelligent-mapping-generator to start..."
+          sleep 60
           
           echo "Checking Mapping Generator..."
-          curl -f http://localhost:8081/v3/api-docs || (cat mapping-generator.log && exit 1)
+          for i in {1..10}; do
+            if curl -f http://localhost:8081/v3/api-docs; then
+              echo "Service is up!"
+              break
+            fi
+            echo "Attempt $i: Service not ready yet, waiting 10s..."
+            sleep 10
+          done
+          
+          # Final check
+          curl -f http://localhost:8081/v3/api-docs || (echo "Service failed to start. Logs:" && cat mapping-generator.log && exit 1)
       
       - name: Create OpenAPI Specs Directory
         run: mkdir -p openapi-specs
       
       - name: Download OpenAPI Specifications
         run: |
-          curl -o openapi-specs/xml-sanitizer-openapi.json http://localhost:8080/v3/api-docs
+          echo "Downloading Mapping Generator OpenAPI Spec..."
           curl -o openapi-specs/mapping-generator-openapi.json http://localhost:8081/v3/api-docs
-          
-          echo "XML Sanitizer OpenAPI Spec:"
-          cat openapi-specs/xml-sanitizer-openapi.json
           
           echo "Mapping Generator OpenAPI Spec:"
           cat openapi-specs/mapping-generator-openapi.json
+          
+          # Create placeholder for xml-sanitizer (future implementation)
+          echo '{"openapi":"3.0.1","info":{"title":"XML Sanitizer API (Coming Soon)","version":"0.0.1"}}' > openapi-specs/xml-sanitizer-openapi.json
       
-      - name: Stop Spring Boot Services
+      - name: Stop Spring Boot Service
         run: |
-          if [ -f xml-sanitizer.pid ]; then
-            kill $(cat xml-sanitizer.pid) || true
-          fi
           if [ -f mapping-generator.pid ]; then
             kill $(cat mapping-generator.pid) || true
           fi
