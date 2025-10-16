@@ -2,13 +2,17 @@
 sidebar_position: 1
 ---
 
-# XML Sanitizer Overview
+# XML Sanitizer Overview (Coming Soon)
 
-The **XML Sanitizer** microservice provides robust XML processing capabilities, focusing on cleaning and validating XML payloads for fintech applications.
+The **XML Sanitizer** microservice is planned for future development.
+
+## 🚧 Status: Planned
+
+This module will provide robust XML processing capabilities, focusing on cleaning and validating XML payloads for fintech applications.
 
 ## Purpose
 
-Remove invalid characters and ensure XML compliance before processing financial messages, particularly for ISO 20022 standards.
+Future module that will remove invalid characters and ensure XML compliance before processing financial messages, particularly for ISO 20022 standards.
 
 ## Key Features
 

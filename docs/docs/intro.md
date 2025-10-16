@@ -9,13 +9,15 @@ A **multi-module Spring Boot monorepo** providing microservices for fintech data
 
 ## 🎯 Overview
 
-This project contains two independent Spring Boot microservices designed for fintech operations:
+This project is a multi-module Spring Boot monorepo for fintech operations:
 
-### 1. XML Sanitizer (Port 8080)
-Sanitizes XML payloads by removing invalid characters and ensuring XML compliance.
-
-### 2. Intelligent Mapping Generator (Port 8081)
+### 1. Intelligent Mapping Generator (Port 8081) ✅ **Active**
 Generates intelligent mappings for fintech data transformations with ISO 20022 support and ActiveMQ Artemis integration.
+
+[View Mapping Generator Documentation →](/docs/intelligent-mapping-generator/overview)
+
+### 2. XML Sanitizer (Port 8080) 🚧 **Planned**
+Future module that will sanitize XML payloads by removing invalid characters and ensuring XML compliance.
 
 ## 🚀 Quick Start
 
