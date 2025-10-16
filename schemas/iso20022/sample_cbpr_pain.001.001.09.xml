@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Business Application Header - MANDATORY for CBPR+ -->
+<AppHdr xmlns="urn:iso:std:iso:20022:tech:xsd:head.001.001.02">
+	<Fr>
+		<FIId>
+			<FinInstnId>
+				<BICFI>DEUTDEFF</BICFI>
+			</FinInstnId>
+		</FIId>
+	</Fr>
+	<To>
+		<FIId>
+			<FinInstnId>
+				<BICFI>BNPAFRPP</BICFI>
+			</FinInstnId>
+		</FIId>
+	</To>
+	<BizMsgIdr>CBPR2025101600001</BizMsgIdr>
+	<MsgDefIdr>pain.001.001.09</MsgDefIdr>
+	<BizSvc>swift.cbprplus.01</BizSvc>
+	<CreDt>2025-10-16T14:30:00+01:00</CreDt>
+</AppHdr>
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<CstmrCdtTrfInitn><!-- Group Header -->
+		<GrpHdr><!-- Message Identification: FIN-X character set only -->
+			<MsgId>CORP2025101600001</MsgId><!-- Creation Date Time -->
+			<CreDtTm>2025-10-16T14:30:00</CreDtTm><!-- Number of Transactions: MUST be exactly "1" for CBPR+ -->
+			<NbOfTxs>1</NbOfTxs><!-- Initiating Party -->
+			<InitgPty>
+				<Nm>ABC Corporation Limited</Nm>
+				<PstlAdr>
+					<StrtNm>Corporate Plaza</StrtNm>
+					<BldgNb>100</BldgNb>
+					<PstCd>10115</PstCd>
+					<TwnNm>Berlin</TwnNm>
+					<Ctry>DE</Ctry>
+					<AdrLine>Friedrichstrasse 100</AdrLine>
+					<AdrLine>Building A 5th Floor</AdrLine>
+				</PstlAdr>
+				<Id>
+					<OrgId>
+						<AnyBIC>ABCCCORP123</AnyBIC>
+					</OrgId>
+				</Id>
+			</InitgPty><!-- Forwarding Agent: BIC is MANDATORY for CBPR+ -->
+			<FwdgAgt>
+				<FinInstnId>
+					<BICFI>DEUTDEFF</BICFI>
+					<ClrSysMmbId>
+						<ClrSysId>
+							<Cd>DEBLZ</Cd>
+						</ClrSysId>
+						<MmbId>50070010</MmbId>
+					</ClrSysMmbId>
+					<LEI>529900T8BM49AURSDO55</LEI>
+				</FinInstnId>
+			</FwdgAgt>
+		</GrpHdr><!-- Payment Information: Exactly ONE for CBPR+ -->
+		<PmtInf><!-- Payment Information Identification -->
+			<PmtInfId>PMTINF-2025-10-16-001</PmtInfId><!-- Payment Method: CHK or TRF only (no TRA) -->
+			<PmtMtd>TRF</PmtMtd><!-- Requested Execution Date -->
+			<ReqdExctnDt>
+				<Dt>2025-10-17</Dt>
+			</ReqdExctnDt><!-- Debtor -->
+			<Dbtr>
+				<Nm>ABC Corporation Limited</Nm>
+				<PstlAdr>
+					<TwnNm>Berlin</TwnNm>
+					<Ctry>DE</Ctry>
+					<AdrLine>Friedrichstrasse 100</AdrLine>
+					<AdrLine>10115 Berlin</AdrLine>
+				</PstlAdr>
+				<Id>
+					<OrgId>
+						<LEI>529900T8BM49AURSDO55</LEI>
+					</OrgId>
+				</Id>
+			</Dbtr><!-- Debtor Account -->
+			<DbtrAcct>
+				<Id>
+					<IBAN>DE89370400440532013000</IBAN>
+				</Id>
+				<Ccy>EUR</Ccy>
+			</DbtrAcct><!-- Debtor Agent -->
+			<DbtrAgt>
+				<FinInstnId>
+					<BICFI>DEUTDEFF</BICFI>
+					<Nm>Deutsche Bank AG</Nm>
+					<PstlAdr>
+						<TwnNm>Frankfurt am Main</TwnNm>
+						<Ctry>DE</Ctry>
+						<AdrLine>Taunusanlage 12</AdrLine>
+						<AdrLine>60325 Frankfurt</AdrLine>
+					</PstlAdr>
+				</FinInstnId>
+			</DbtrAgt><!-- Ultimate Debtor -->
+			<UltmtDbtr>
+				<Nm>ABC Group Holding Company</Nm>
+				<PstlAdr><!-- TownName is MANDATORY for Ultimate Debtor in CBPR+ -->
+					<TwnNm>Berlin</TwnNm><!-- Country is MANDATORY -->
+					<Ctry>DE</Ctry>
+				</PstlAdr>
+			</UltmtDbtr><!-- Credit Transfer Transaction Information -->
+			<CdtTrfTxInf><!-- Payment Identification -->
+				<PmtId><!-- Instruction Identification -->
+					<InstrId>INSTR-001-2025-10-16</InstrId><!-- End to End Identification -->
+					<EndToEndId>E2E-ABC-20251016-001</EndToEndId><!-- UETR: MANDATORY for CBPR+ (UUID v4 format) -->
+					<UETR>f81d4fae-7dec-41d0-a765-00a0c91e6bf6</UETR>
+				</PmtId><!-- Payment Type Information -->
+				<PmtTpInf>
+					<InstrPrty>HIGH</InstrPrty>
+					<SvcLvl>
+						<Cd>URGP</Cd>
+					</SvcLvl>
+					<LclInstrm>
+						<Cd>INST</Cd>
+					</LclInstrm>
+					<CtgyPurp>
+						<Cd>SUPP</Cd>
+					</CtgyPurp>
+				</PmtTpInf><!-- Amount -->
+				<Amt>
+					<InstdAmt Ccy="EUR">125000.00</InstdAmt>
+				</Amt><!-- Charge Bearer: DEBT, CRED, or SHAR only (no SLEV) -->
+				<ChrgBr>SHAR</ChrgBr><!-- Intermediary Agent 1 -->
+				<IntrmyAgt1>
+					<FinInstnId>
+						<BICFI>CHASUS33</BICFI>
+						<Nm>JP Morgan Chase Bank N.A.</Nm>
+					</FinInstnId>
+				</IntrmyAgt1><!-- Creditor Agent -->
+				<CdtrAgt>
+					<FinInstnId>
+						<BICFI>BNPAFRPP</BICFI>
+						<Nm>BNP Paribas</Nm>
+						<PstlAdr>
+							<TwnNm>Paris</TwnNm>
+							<Ctry>FR</Ctry>
+							<AdrLine>16 Boulevard des Italiens</AdrLine>
+							<AdrLine>75009 Paris</AdrLine>
+						</PstlAdr>
+					</FinInstnId>
+				</CdtrAgt><!-- Creditor -->
+				<Cdtr>
+					<Nm>XYZ Suppliers S.A.</Nm>
+					<PstlAdr>
+						<TwnNm>Paris</TwnNm>
+						<Ctry>FR</Ctry>
+						<AdrLine>Avenue des Champs-Elysees 123</AdrLine>
+						<AdrLine>75008 Paris</AdrLine>
+					</PstlAdr>
+					<Id>
+						<OrgId>
+							<LEI>969500XXRPGD7HBABA90</LEI>
+						</OrgId>
+					</Id>
+				</Cdtr><!-- Creditor Account: IBAN required for European destinations -->
+				<CdtrAcct>
+					<Id>
+						<IBAN>FR1420041010050500013M02606</IBAN>
+					</Id>
+					<Ccy>EUR</Ccy>
+				</CdtrAcct><!-- Ultimate Creditor -->
+				<UltmtCdtr>
+					<Nm>XYZ International Group</Nm>
+					<PstlAdr>
+						<TwnNm>Paris</TwnNm>
+						<Ctry>FR</Ctry>
+					</PstlAdr>
+				</UltmtCdtr><!-- Instructions for Creditor Agent: Maximum 2 allowed -->
+				<InstrForCdtrAgt>
+					<Cd>PHOB</Cd>
+					<InstrInf>Contact beneficiary before credit</InstrInf>
+				</InstrForCdtrAgt>
+				<InstrForCdtrAgt>
+					<Cd>TELB</Cd>
+					<InstrInf>+33-1-23-45-67-89</InstrInf>
+				</InstrForCdtrAgt><!-- Purpose -->
+				<Purp>
+					<Cd>GDDS</Cd>
+				</Purp><!-- Regulatory Reporting -->
+				<RgltryRptg>
+					<Dtls>
+						<Tp>BALANCE OF PAYMENTS</Tp>
+						<Ctry>DE</Ctry>
+						<Cd>021</Cd>
+						<Amt Ccy="EUR">125000.00</Amt>
+						<Inf>Import of goods</Inf>
+					</Dtls>
+				</RgltryRptg><!-- Remittance Information -->
+				<RmtInf><!-- Unstructured: Maximum 1 allowed for CBPR+ -->
+					<Ustrd>Payment for Invoice INV-2025-0123 dated 2025-10-01</Ustrd>
+				</RmtInf>
+			</CdtTrfTxInf>
+		</PmtInf>
+	</CstmrCdtTrfInitn>
+</Document>

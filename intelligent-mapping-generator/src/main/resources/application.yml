@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: intelligent-mapping-generator
+  
+  # Embedded Artemis Configuration (ActiveMQ Artemis)
+  artemis:
+    mode: embedded
+    embedded:
+      enabled: true
+      persistent: false
+  
+  jms:
+    pub-sub-domain: false  # Use queues, not topics
+
+# Application-specific configuration
+app:
+  validation:
+    queue-name: pain001.validation.queue
+    result-queue-name: pain001.validation.results
+    dlq-name: pain001.validation.dlq
+  
+  schemas:
+    cbpr-path: classpath:schemas/CBPR_pain.001.001.09.xsd
+    iso-path: classpath:schemas/pain.001.001.09.xsd.xml
+
+logging:
+  level:
+    com.fintech.mapping: DEBUG
+    org.springframework.jms: INFO
+    org.apache.activemq: WARN

@@ -1,4 +1,22 @@
 // intelligent-mapping-generator module specific configuration
+dependencies {
+    // ActiveMQ Artemis (Embedded broker that works with Spring Boot 3.x)
+    implementation 'org.springframework.boot:spring-boot-starter-artemis'
+    implementation 'org.apache.activemq:artemis-jakarta-server:2.31.2'
+    implementation 'org.apache.activemq:artemis-jakarta-client:2.31.2'
+    
+    // Jakarta Annotations
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+    
+    // XML Processing and Validation
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'com.sun.xml.bind:jaxb-impl:2.3.9'
+    
+    // Lombok for cleaner code
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
 springBoot {
     mainClass = 'com.fintech.mapping.MappingGeneratorApplication'
 }
