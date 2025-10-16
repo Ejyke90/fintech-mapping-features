@@ -1,0 +1,9 @@
+# OpenAPI Specifications
+# These files are generated dynamically from running Spring Boot services
+
+*.json
+xml-sanitizer-openapi.json
+mapping-generator-openapi.json
+
+# Keep the directory but ignore generated files
+!.gitkeep
