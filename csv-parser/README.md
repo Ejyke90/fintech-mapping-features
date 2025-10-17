@@ -43,7 +43,7 @@ The service will start on `http://localhost:8000`
 
 - `POST /api/csv/parse` - Upload and parse a CSV file
 - `POST /api/csv/validate` - Validate CSV structure
-- `GET /api/csv/schema` - Get detected schema from CSV
+- `POST /api/csv/schema` - Get detected schema from CSV
 - `POST /api/csv/transform` - Transform CSV to JSON
 
 ### Example
