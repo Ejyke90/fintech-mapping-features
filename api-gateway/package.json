@@ -1,0 +1,48 @@
+{
+  "name": "fintech-api-gateway",
+  "version": "1.0.0",
+  "description": "API Gateway and Orchestrator for Fintech Mapping Features",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "nodemon --watch src --exec ts-node src/index.ts",
+    "test": "jest",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "fintech",
+    "api-gateway",
+    "microservices",
+    "orchestration"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.1",
+    "winston": "^3.11.0",
+    "express-validator": "^7.0.1",
+    "multer": "^1.4.5-lts.1",
+    "form-data": "^4.0.0",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/cors": "^2.8.16",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.9.0",
+    "@types/uuid": "^9.0.7",
+    "@types/xml2js": "^0.4.14",
+    "typescript": "^5.2.2",
+    "ts-node": "^10.9.1",
+    "nodemon": "^3.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0"
+  }
+}

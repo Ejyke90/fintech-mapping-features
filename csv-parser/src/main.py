@@ -261,6 +261,87 @@ async def transform_csv(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.post("/api/csv/prepare-for-xml")
+async def prepare_for_xml(
+    file: UploadFile = File(...),
+    auto_detect: bool = Query(True)
+):
+    """
+    Prepare CSV data for XML transformation
+    Returns structured data ready for XML conversion
+    """
+    try:
+        content = await file.read()
+        
+        if len(content) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=413, detail="File too large")
+        
+        parser = CSVParser()
+        df = parser.parse_file(content, auto_detect=auto_detect)
+        
+        # Get schema and data
+        schema = parser.get_schema(df)
+        data = parser.transform_to_json(df)
+        
+        return {
+            "status": "success",
+            "message": "CSV prepared for XML transformation",
+            "row_count": len(df),
+            "column_count": len(df.columns),
+            "columns": list(df.columns),
+            "schema": schema,
+            "data": data,
+            "xml_ready": True
+        }
+        
+    except Exception as e:
+        logger.error(f"XML preparation error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/csv/prepare-for-mapping")
+async def prepare_for_mapping(
+    file: UploadFile = File(...),
+    target_format: str = Query("ISO20022", description="Target format for mapping"),
+    auto_detect: bool = Query(True)
+):
+    """
+    Prepare CSV schema for intelligent mapping generation
+    Returns schema information suitable for mapping analysis
+    """
+    try:
+        content = await file.read()
+        
+        if len(content) > MAX_FILE_SIZE:
+            raise HTTPException(status_code=413, detail="File too large")
+        
+        parser = CSVParser()
+        df = parser.parse_file(content, auto_detect=auto_detect)
+        
+        # Get comprehensive schema
+        schema = parser.get_schema(df)
+        
+        # Get sample data for mapping context
+        sample_data = parser.transform_to_json(df.head(10))
+        
+        # Perform validation
+        validation = parser.validate_structure(df)
+        
+        return {
+            "status": "success",
+            "message": "CSV schema prepared for mapping generation",
+            "target_format": target_format,
+            "source_schema": schema,
+            "sample_data": sample_data,
+            "validation": validation,
+            "mapping_ready": True
+        }
+        
+    except Exception as e:
+        logger.error(f"Mapping preparation error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 if __name__ == "__main__":
     import uvicorn
     
