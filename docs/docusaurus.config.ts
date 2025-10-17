@@ -146,10 +146,10 @@ const config: Config = {
         {to: '/blog', label: 'Blog', position: 'left'},
         // Show branch indicator for non-main branches
         ...(!isMainBranch ? [{
-          label: `📍 Branch: ${branchName}`,
-          position: 'right',
-          className: 'navbar__branch-indicator',
-        } as any] : []),
+          type: 'html' as const,
+          position: 'right' as const,
+          value: `<span class="navbar__branch-indicator">📍 Branch: ${branchName}</span>`,
+        }] : []),
         {
           href: 'https://github.com/Ejyke90/fintech-mapping-features',
           label: 'GitHub',
