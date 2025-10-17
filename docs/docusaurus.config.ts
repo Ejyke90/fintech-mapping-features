@@ -4,6 +4,11 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+// Multi-branch deployment support: read from environment variables
+const baseUrl = process.env.BASE_URL || '/fintech-mapping-features/';
+const branchName = process.env.BRANCH_NAME || 'main';
+const isMainBranch = branchName === 'main';
+
 const config: Config = {
   title: 'Fintech Mapping Features',
   tagline: 'Multi-module Spring Boot Microservices for Fintech Data Transformation',
@@ -18,7 +23,7 @@ const config: Config = {
   url: 'https://ejyke90.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/fintech-mapping-features/',
+  baseUrl: baseUrl,  // Dynamic baseUrl from environment
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -98,6 +103,16 @@ const config: Config = {
   themes: ['docusaurus-theme-openapi-docs'],
 
   themeConfig: {
+    // Branch-specific announcement bar (shown for non-main branches)
+    ...(!isMainBranch && {
+      announcementBar: {
+        id: `branch_${branchName}`,
+        content: `📋 You are viewing documentation for branch: <strong>${branchName}</strong>. <a href="/fintech-mapping-features/" style="text-decoration: underline;">View latest (main)</a>`,
+        backgroundColor: '#ffd700',
+        textColor: '#000',
+        isCloseable: false,
+      },
+    }),
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     colorMode: {
@@ -129,6 +144,12 @@ const config: Config = {
           label: 'Mapping Generator',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
+        // Show branch indicator for non-main branches
+        ...(!isMainBranch ? [{
+          type: 'html' as const,
+          position: 'right' as const,
+          value: `<span class="navbar__branch-indicator">📍 Branch: ${branchName}</span>`,
+        }] : []),
         {
           href: 'https://github.com/Ejyke90/fintech-mapping-features',
           label: 'GitHub',

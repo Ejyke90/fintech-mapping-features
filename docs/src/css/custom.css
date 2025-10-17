@@ -28,3 +28,18 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
+
+/* Branch indicator styling */
+.navbar__branch-indicator {
+  background-color: #ffd700 !important;
+  color: #000 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 4px !important;
+  font-weight: 600 !important;
+  cursor: default !important;
+}
+
+[data-theme='dark'] .navbar__branch-indicator {
+  background-color: #ff6b6b !important;
+  color: #fff !important;
+}

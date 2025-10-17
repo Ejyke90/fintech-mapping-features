@@ -1,0 +1,269 @@
+name: Deploy Docusaurus to GitHub Pages (Multi-Branch)
+
+on:
+  push:
+    branches:
+      - main
+      - intelligentMappingPoC
+      - dev
+      - staging
+      - 'release/**'    # Match release/v1.0, release/v2.0, etc.
+      - 'feature/**'    # Match all feature branches
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: write  # Need write to push to gh-pages branch
+  pages: write
+  id-token: write
+  pull-requests: write  # For PR comments
+
+concurrency:
+  group: "pages-${{ github.ref_name }}"  # Allow parallel deploys per branch
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Determine deployment path
+        id: deploy-path
+        run: |
+          BRANCH_NAME="${{ github.head_ref || github.ref_name }}"
+          
+          echo "🔍 Processing branch: $BRANCH_NAME"
+          
+          # Sanitize branch name for URL (replace / with -, remove special chars, lowercase)
+          DEPLOY_PATH=$(echo "$BRANCH_NAME" | sed 's/\//-/g' | sed 's/[^a-zA-Z0-9-]/-/g' | tr '[:upper:]' '[:lower:]')
+          
+          # Main branch goes to root
+          if [ "$BRANCH_NAME" == "main" ]; then
+            DEPLOY_PATH=""
+            BASE_URL="/fintech-mapping-features/"
+            echo "📍 Deploying to ROOT (main branch)"
+          else
+            BASE_URL="/fintech-mapping-features/${DEPLOY_PATH}/"
+            echo "📍 Deploying to subdirectory: ${DEPLOY_PATH}"
+          fi
+          
+          echo "deploy_path=$DEPLOY_PATH" >> $GITHUB_OUTPUT
+          echo "base_url=$BASE_URL" >> $GITHUB_OUTPUT
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          echo "✅ Configuration:"
+          echo "   Branch: $BRANCH_NAME"
+          echo "   Deploy Path: $DEPLOY_PATH"
+          echo "   Base URL: $BASE_URL"
+      
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'gradle'
+      
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: docs/package-lock.json
+      
+      - name: Grant Execute Permission to Gradlew
+        run: chmod +x ./gradlew
+      
+      - name: Build Spring Boot Microservices
+        run: ./gradlew :intelligent-mapping-generator:build -x test
+      
+      - name: Start Mapping Generator Service
+        run: |
+          ./gradlew :intelligent-mapping-generator:bootRun > mapping-generator.log 2>&1 &
+          echo $! > mapping-generator.pid
+      
+      - name: Wait for Service to Start
+        run: |
+          echo "⏳ Waiting for intelligent-mapping-generator to start..."
+          sleep 60
+          
+          echo "🔍 Checking Mapping Generator..."
+          for i in {1..10}; do
+            if curl -f http://localhost:8081/v3/api-docs; then
+              echo "✅ Service is up!"
+              break
+            fi
+            echo "⏰ Attempt $i: Service not ready yet, waiting 10s..."
+            sleep 10
+          done
+          
+          # Final check
+          curl -f http://localhost:8081/v3/api-docs || (echo "❌ Service failed to start. Logs:" && cat mapping-generator.log && exit 1)
+      
+      - name: Create OpenAPI Specs Directory
+        run: mkdir -p openapi-specs
+      
+      - name: Download OpenAPI Specifications
+        run: |
+          echo "📥 Downloading Mapping Generator OpenAPI Spec..."
+          curl -o openapi-specs/mapping-generator-openapi.json http://localhost:8081/v3/api-docs
+          
+          echo "📄 Mapping Generator OpenAPI Spec:"
+          cat openapi-specs/mapping-generator-openapi.json
+          
+          # Create placeholder for xml-sanitizer (future implementation)
+          echo '{"openapi":"3.0.1","info":{"title":"XML Sanitizer API (Coming Soon)","version":"0.0.1"}}' > openapi-specs/xml-sanitizer-openapi.json
+      
+      - name: Stop Spring Boot Service
+        run: |
+          if [ -f mapping-generator.pid ]; then
+            kill $(cat mapping-generator.pid) || true
+          fi
+      
+      - name: Install Docusaurus Dependencies
+        working-directory: ./docs
+        run: npm ci
+      
+      - name: Generate API Documentation from OpenAPI Specs
+        working-directory: ./docs
+        run: npm run gen-api-docs || echo "⚠️  Skipping API docs generation"
+      
+      - name: Build Docusaurus Site with Branch Config
+        working-directory: ./docs
+        env:
+          BASE_URL: ${{ steps.deploy-path.outputs.base_url }}
+          BRANCH_NAME: ${{ steps.deploy-path.outputs.branch_name }}
+          NODE_OPTIONS: "--max-old-space-size=4096"
+        run: |
+          echo "🏗️  Building documentation..."
+          echo "   Base URL: $BASE_URL"
+          echo "   Branch: $BRANCH_NAME"
+          npm run build
+      
+      - name: Add branch metadata
+        working-directory: ./docs/build
+        run: |
+          # Create .nojekyll to preserve _next directories
+          touch .nojekyll
+          
+          # Add metadata file for tracking
+          cat > branch-info.json << EOF
+          {
+            "branch": "${{ steps.deploy-path.outputs.branch_name }}",
+            "commit": "${{ github.sha }}",
+            "commit_short": "${GITHUB_SHA:0:7}",
+            "deployed_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "deployed_by": "${{ github.actor }}",
+            "workflow_run": "${{ github.run_id }}",
+            "base_url": "${{ steps.deploy-path.outputs.base_url }}"
+          }
+          EOF
+          
+          echo "📋 Branch metadata created"
+          cat branch-info.json
+      
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build
+          destination_dir: ${{ steps.deploy-path.outputs.deploy_path }}
+          keep_files: true  # CRITICAL: Keep other branch deployments
+          commit_message: |
+            Deploy docs from ${{ steps.deploy-path.outputs.branch_name }}
+            
+            Branch: ${{ steps.deploy-path.outputs.branch_name }}
+            Commit: ${{ github.sha }}
+            Actor: ${{ github.actor }}
+      
+      - name: Add deployment comment to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployPath = '${{ steps.deploy-path.outputs.deploy_path }}';
+            const branchName = '${{ steps.deploy-path.outputs.branch_name }}';
+            const commitSha = '${{ github.sha }}'.substring(0, 7);
+            const deployUrl = deployPath 
+              ? `https://ejyke90.github.io/fintech-mapping-features/${deployPath}/`
+              : 'https://ejyke90.github.io/fintech-mapping-features/';
+            
+            const comment = `## 📚 Documentation Preview Deployed!
+            
+            ✅ Your documentation changes have been deployed successfully.
+            
+            ### 🔗 Preview URLs
+            - **Main Docs**: [${deployUrl}](${deployUrl})
+            - **API Docs**: [${deployUrl}docs/intelligent-mapping-generator/overview](${deployUrl}docs/intelligent-mapping-generator/overview)
+            
+            ### 📊 Deployment Info
+            - **Branch**: \`${branchName}\`
+            - **Commit**: \`${commitSha}\`
+            - **Deployed**: ${new Date().toUTCString()}
+            
+            > 💡 This preview will be automatically updated with every push to this branch.
+            > 🗑️ Preview will be removed when the branch is deleted or PR is closed.`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+      
+      - name: Create deployment summary
+        run: |
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Successfully Deployed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Branch** | \`${{ steps.deploy-path.outputs.branch_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Commit** | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Deploy Path** | \`${{ steps.deploy-path.outputs.deploy_path }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Base URL** | \`${{ steps.deploy-path.outputs.base_url }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Deployed By** | @${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Deployed At** | $(date -u +%Y-%m-%d\ %H:%M:%S\ UTC) |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 View Documentation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[View Deployed Site](https://ejyke90.github.io${{ steps.deploy-path.outputs.base_url }})**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "💡 **Tip**: This deployment will remain available until the branch is deleted." >> $GITHUB_STEP_SUMMARY
+
+  # Cleanup job for deleted branches
+  cleanup:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'delete' && github.event.ref_type == 'branch'
+    
+    steps:
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Remove branch deployment
+        run: |
+          BRANCH_NAME="${{ github.event.ref }}"
+          DEPLOY_PATH=$(echo "$BRANCH_NAME" | sed 's/\//-/g' | sed 's/[^a-zA-Z0-9-]/-/g' | tr '[:upper:]' '[:lower:]')
+          
+          echo "🗑️  Attempting to remove deployment for: $BRANCH_NAME"
+          echo "   Deployment path: $DEPLOY_PATH"
+          
+          if [ -d "$DEPLOY_PATH" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git rm -rf "$DEPLOY_PATH"
+            git commit -m "🗑️ Remove deployment for deleted branch: $BRANCH_NAME"
+            git push
+            echo "✅ Removed deployment for branch: $BRANCH_NAME"
+          else
+            echo "ℹ️  No deployment found for branch: $BRANCH_NAME"
+          fi
