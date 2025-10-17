@@ -1,6 +1,6 @@
 # Fintech Mapping Features - Mono-repo
 
-This is a mono-repo project containing two independent Spring Boot microservices for fintech operations.
+This is a mono-repo project containing three independent microservices for fintech data transformation and processing operations.
 
 ## Project Structure
 
@@ -10,7 +10,7 @@ fintech-mapping-features/
 ├── settings.gradle                 # Multi-module configuration
 ├── gradlew                         # Gradle wrapper script
 ├── Dockerfile                      # Docker configuration
-├── xml-sanitizer/                  # XML Sanitizer microservice
+├── xml-sanitizer/                  # XML Sanitizer microservice (Java/Spring Boot)
 │   ├── build.gradle
 │   └── src/
 │       ├── main/
@@ -21,32 +21,53 @@ fintech-mapping-features/
 │       │   └── resources/
 │       │       └── application.properties (port: 8080)
 │       └── test/java/
-└── intelligent-mapping-generator/  # Intelligent Mapping Generator microservice
-    ├── build.gradle
-    └── src/
-        ├── main/
-        │   ├── java/com/fintech/mapping/
-        │   │   ├── MappingGeneratorApplication.java
-        │   │   └── controller/
-        │   │       └── MappingGeneratorController.java
-        │   └── resources/
-        │       └── application.properties (port: 8081)
-        └── test/java/
+├── intelligent-mapping-generator/  # Intelligent Mapping Generator microservice (Java/Spring Boot)
+│   ├── build.gradle
+│   └── src/
+│       ├── main/
+│       │   ├── java/com/fintech/mapping/
+│       │   │   ├── MappingGeneratorApplication.java
+│       │   │   └── controller/
+│       │   │       └── MappingGeneratorController.java
+│       │   └── resources/
+│       │       └── application.properties (port: 8081)
+│       └── test/java/
+└── csv-parser/                     # CSV Parser microservice (Python/FastAPI)
+    ├── src/
+    │   ├── main.py                 # FastAPI application
+    │   └── parser.py               # Core CSV parsing logic
+    ├── tests/
+    │   └── test_parser.py          # Unit tests
+    ├── Dockerfile                  # Container configuration
+    ├── requirements.txt            # Python dependencies
+    └── README.md                   # Module documentation
 ```
 
 ## Modules
 
-### 1. XML Sanitizer
+### 1. XML Sanitizer (Java/Spring Boot)
 - **Port**: 8080
 - **Purpose**: Sanitizes XML payloads by removing invalid characters
 - **Endpoint**: `POST /sanitize-chars`
 - **Package**: `com.fintech.sanitizer`
+- **Technology**: Java 21, Spring Boot 3.2.1
 
-### 2. Intelligent Mapping Generator
+### 2. Intelligent Mapping Generator (Java/Spring Boot)
 - **Port**: 8081
 - **Purpose**: Generates intelligent mappings for fintech data transformations
 - **Endpoint**: `POST /generate-mapping`
 - **Package**: `com.fintech.mapping`
+- **Technology**: Java 21, Spring Boot 3.2.1
+
+### 3. CSV Parser (Python/FastAPI)
+- **Port**: 8000
+- **Purpose**: Parse, validate, and transform CSV files
+- **Endpoints**: 
+  - `POST /api/csv/parse` - Parse CSV files
+  - `POST /api/csv/validate` - Validate CSV structure
+  - `POST /api/csv/schema` - Extract schema information
+  - `POST /api/csv/transform` - Clean and transform data
+- **Technology**: Python 3.9+, FastAPI, Pandas
 
 ## Building the Project
 
@@ -78,13 +99,25 @@ fintech-mapping-features/
 ./gradlew :intelligent-mapping-generator:bootRun
 ```
 
-### Run both services simultaneously (in separate terminals)
+### Run CSV Parser (Port 8000)
 ```bash
-# Terminal 1
+cd csv-parser
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python src/main.py
+```
+
+### Run all services simultaneously (in separate terminals)
+```bash
+# Terminal 1 - XML Sanitizer
 ./gradlew :xml-sanitizer:bootRun
 
-# Terminal 2
+# Terminal 2 - Intelligent Mapping Generator
 ./gradlew :intelligent-mapping-generator:bootRun
+
+# Terminal 3 - CSV Parser
+cd csv-parser && source venv/bin/activate && python src/main.py
 ```
 
 ## Testing
@@ -143,6 +176,30 @@ curl -X POST http://localhost:8081/generate-mapping \
   -H "Content-Type: application/json" \
   -d '{"source": "field1", "target": "field2"}'
 ```
+
+### CSV Parser
+```bash
+# Parse a CSV file
+curl -X POST http://localhost:8000/api/csv/parse \
+  -F "file=@data.csv"
+
+# Validate CSV structure
+curl -X POST http://localhost:8000/api/csv/validate \
+  -F "file=@data.csv"
+
+# Get CSV schema
+curl -X POST http://localhost:8000/api/csv/schema \
+  -F "file=@data.csv"
+```
+
+## Documentation
+
+Full documentation is available at: [GitHub Pages Documentation](https://ejyke90.github.io/fintech-mapping-features/)
+
+### Quick Links
+- [XML Sanitizer Guide](docs/docs/xml-sanitizer/overview.md)
+- [Intelligent Mapping Generator Guide](docs/docs/intelligent-mapping-generator/overview.md)
+- [CSV Parser Guide](docs/docs/csv-parser/overview.md)
 
 ## License
 [Add your license here]
