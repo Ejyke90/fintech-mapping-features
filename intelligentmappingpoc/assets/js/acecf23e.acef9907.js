@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkdocs=globalThis.webpackChunkdocs||[]).push([[1903],{1912:e=>{e.exports=JSON.parse('{"blogBasePath":"/fintech-mapping-features/intelligentmappingpoc/blog","blogTitle":"Blog","authorsListPath":"/fintech-mapping-features/intelligentmappingpoc/blog/authors"}')}}]);

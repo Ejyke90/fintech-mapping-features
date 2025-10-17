@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="rss.xsl"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Fintech Mapping Features Blog</title>
+        <link>https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog</link>
+        <description>Fintech Mapping Features Blog</description>
+        <lastBuildDate>Thu, 26 Aug 2021 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Welcome to Fintech Mapping Features Documentation]]></title>
+            <link>https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome</link>
+            <guid>https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome</guid>
+            <pubDate>Thu, 26 Aug 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Welcome to the Fintech Mapping Features documentation site! This project is a multi-module Spring Boot monorepo designed for fintech data transformation and ISO 20022 message processing.]]></description>
+            <content:encoded><![CDATA[<p>Welcome to the <strong>Fintech Mapping Features</strong> documentation site! This project is a multi-module Spring Boot monorepo designed for fintech data transformation and ISO 20022 message processing.</p>
+<p><img decoding="async" loading="lazy" alt="Ejike Udeze" src="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/assets/images/Stage_Ejike_U-63948a6c8aa07a1111fd41de8db53562.jpg" width="4000" height="6000" class="img_ev3q"></p>
+<p>As a Cloud Engineer and AI Enthusiast, I'm excited to share this comprehensive documentation covering our microservices architecture, API references, and deployment guides.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="whats-inside">What's Inside<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome#whats-inside" class="hash-link" aria-label="Direct link to What's Inside" title="Direct link to What's Inside" translate="no">​</a></h2>
+<p>This documentation covers two powerful microservices:</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="-xml-sanitizer-port-8080">🧹 XML Sanitizer (Port 8080)<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome#-xml-sanitizer-port-8080" class="hash-link" aria-label="Direct link to 🧹 XML Sanitizer (Port 8080)" title="Direct link to 🧹 XML Sanitizer (Port 8080)" translate="no">​</a></h3>
+<p>Ensures XML compliance by removing invalid characters and validating XML payloads - essential for financial message processing.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="️-intelligent-mapping-generator-port-8081">🗺️ Intelligent Mapping Generator (Port 8081)<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome#%EF%B8%8F-intelligent-mapping-generator-port-8081" class="hash-link" aria-label="Direct link to 🗺️ Intelligent Mapping Generator (Port 8081)" title="Direct link to 🗺️ Intelligent Mapping Generator (Port 8081)" translate="no">​</a></h3>
+<p>Generates intelligent mappings for fintech data transformations with full ISO 20022 support and ActiveMQ Artemis integration.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="key-features">Key Features<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome#key-features" class="hash-link" aria-label="Direct link to Key Features" title="Direct link to Key Features" translate="no">​</a></h2>
+<ul>
+<li>✅ <strong>Automated API Documentation</strong> - Swagger UI integration</li>
+<li>✅ <strong>ISO 20022 Standards</strong> - PAIN and PACS message support</li>
+<li>✅ <strong>Modern Stack</strong> - Java 21, Spring Boot 3.2.1, Gradle</li>
+<li>✅ <strong>Message Broker</strong> - Embedded ActiveMQ Artemis</li>
+<li>✅ <strong>Comprehensive Docs</strong> - Architecture, guides, and API references</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="get-started">Get Started<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome#get-started" class="hash-link" aria-label="Direct link to Get Started" title="Direct link to Get Started" translate="no">​</a></h2>
+<p>Check out our <a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/docs/guides/getting-started">Getting Started Guide</a> to set up your local environment and start building with our APIs.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="continuous-updates">Continuous Updates<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/welcome#continuous-updates" class="hash-link" aria-label="Direct link to Continuous Updates" title="Direct link to Continuous Updates" translate="no">​</a></h2>
+<p>This documentation is automatically generated and deployed via GitHub Actions, ensuring you always have access to the latest API specifications and guides.</p>
+<p>Happy building! 🚀</p>]]></content:encoded>
+            <category>fintech</category>
+            <category>spring-boot</category>
+            <category>microservices</category>
+            <category>iso20022</category>
+        </item>
+        <item>
+            <title><![CDATA[Building ISO 20022-Compliant Microservices with Spring Boot]]></title>
+            <link>https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices</link>
+            <guid>https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices</guid>
+            <pubDate>Wed, 29 May 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[Deep dive into how we built ISO 20022-compliant microservices for financial message processing using Spring Boot 3.2.1 and Java 21.]]></description>
+            <content:encoded><![CDATA[<p>Deep dive into how we built ISO 20022-compliant microservices for financial message processing using Spring Boot 3.2.1 and Java 21.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="understanding-iso-20022">Understanding ISO 20022<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#understanding-iso-20022" class="hash-link" aria-label="Direct link to Understanding ISO 20022" title="Direct link to Understanding ISO 20022" translate="no">​</a></h2>
+<p>ISO 20022 is the international standard for electronic data interchange between financial institutions. It provides a common platform for developing messages using XML and JSON.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="key-message-types-we-support">Key Message Types We Support<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#key-message-types-we-support" class="hash-link" aria-label="Direct link to Key Message Types We Support" title="Direct link to Key Message Types We Support" translate="no">​</a></h3>
+<p><strong>PAIN Messages (Payments Initiation)</strong></p>
+<ul>
+<li><code>pain.001.001.09</code> - Customer Credit Transfer Initiation</li>
+<li><code>pain.002.001.10</code> - Payment Status Report</li>
+</ul>
+<p><strong>PACS Messages (Payments Clearing and Settlement)</strong></p>
+<ul>
+<li><code>pacs.008.001.08</code> - Financial Institution Credit Transfer</li>
+<li><code>pacs.002.001.10</code> - Payment Status Report</li>
+<li><code>pacs.004.001.09</code> - Payment Return</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="architecture-overview">Architecture Overview<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#architecture-overview" class="hash-link" aria-label="Direct link to Architecture Overview" title="Direct link to Architecture Overview" translate="no">​</a></h2>
+<p>Our monorepo contains two specialized microservices:</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-xml-sanitizer-port-8080">1. XML Sanitizer (Port 8080)<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#1-xml-sanitizer-port-8080" class="hash-link" aria-label="Direct link to 1. XML Sanitizer (Port 8080)" title="Direct link to 1. XML Sanitizer (Port 8080)" translate="no">​</a></h3>
+<p>Ensures XML compliance before processing financial messages. Critical for handling ISO 20022 XML payloads that may contain invalid characters.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-intelligent-mapping-generator-port-8081">2. Intelligent Mapping Generator (Port 8081)<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#2-intelligent-mapping-generator-port-8081" class="hash-link" aria-label="Direct link to 2. Intelligent Mapping Generator (Port 8081)" title="Direct link to 2. Intelligent Mapping Generator (Port 8081)" translate="no">​</a></h3>
+<p>Transforms between different ISO 20022 message formats. For example, mapping <code>pain.001.001.09</code> (customer-initiated payment) to <code>pacs.008.001.08</code> (interbank credit transfer).</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="technical-implementation">Technical Implementation<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#technical-implementation" class="hash-link" aria-label="Direct link to Technical Implementation" title="Direct link to Technical Implementation" translate="no">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="jaxb-for-xml-processing">JAXB for XML Processing<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#jaxb-for-xml-processing" class="hash-link" aria-label="Direct link to JAXB for XML Processing" title="Direct link to JAXB for XML Processing" translate="no">​</a></h3>
+<div class="language-java codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-java codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">@XmlRootElement(name = "Document")</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">@XmlAccessorType(XmlAccessType.FIELD)</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">public class Pain00100109 {</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    @XmlElement(name = "CstmrCdtTrfInitn")</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    private CustomerCreditTransferInitiation creditTransfer;</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">}</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="activemq-artemis-integration">ActiveMQ Artemis Integration<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#activemq-artemis-integration" class="hash-link" aria-label="Direct link to ActiveMQ Artemis Integration" title="Direct link to ActiveMQ Artemis Integration" translate="no">​</a></h3>
+<p>We use embedded ActiveMQ Artemis for asynchronous message processing:</p>
+<div class="language-properties codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-properties codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">spring.artemis.mode=embedded</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">spring.artemis.embedded.enabled=true</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">spring.artemis.embedded.persistent=false</span><br></span></code></pre></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="benefits-of-our-approach">Benefits of Our Approach<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#benefits-of-our-approach" class="hash-link" aria-label="Direct link to Benefits of Our Approach" title="Direct link to Benefits of Our Approach" translate="no">​</a></h2>
+<p>✅ <strong>Compliance</strong> - Full ISO 20022 standard adherence<br>
+<!-- -->✅ <strong>Scalability</strong> - Stateless microservices can scale horizontally<br>
+<!-- -->✅ <strong>Modularity</strong> - Independent deployment of sanitizer and mapper<br>
+<!-- -->✅ <strong>Performance</strong> - Java 21 with virtual threads support<br>
+<!-- -->✅ <strong>Developer Experience</strong> - Comprehensive API documentation</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="whats-next">What's Next?<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/iso20022-microservices#whats-next" class="hash-link" aria-label="Direct link to What's Next?" title="Direct link to What's Next?" translate="no">​</a></h2>
+<p>We're planning to add support for:</p>
+<ul>
+<li>ISO 20022 CAMT messages (Cash Management)</li>
+<li>Real-time validation against XSD schemas</li>
+<li>Message routing based on BIC codes</li>
+<li>Enhanced error handling and retry logic</li>
+</ul>
+<p>Stay tuned for more updates!</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>]]></content:encoded>
+            <category>iso20022</category>
+            <category>fintech</category>
+            <category>spring-boot</category>
+            <category>microservices</category>
+            <category>payments</category>
+        </item>
+        <item>
+            <title><![CDATA[Integrating SpringDoc OpenAPI with Docusaurus]]></title>
+            <link>https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/springdoc-openapi-integration</link>
+            <guid>https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/springdoc-openapi-integration</guid>
+            <pubDate>Tue, 28 May 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[Learn how we integrated SpringDoc OpenAPI with Docusaurus to create automated, interactive API documentation for our fintech microservices.]]></description>
+            <content:encoded><![CDATA[<p>Learn how we integrated SpringDoc OpenAPI with Docusaurus to create automated, interactive API documentation for our fintech microservices.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-challenge">The Challenge<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/springdoc-openapi-integration#the-challenge" class="hash-link" aria-label="Direct link to The Challenge" title="Direct link to The Challenge" translate="no">​</a></h2>
+<p>Managing API documentation for multiple microservices can be challenging. We needed a solution that would:</p>
+<ul>
+<li>Automatically generate API docs from our Spring Boot services</li>
+<li>Provide interactive API testing via Swagger UI</li>
+<li>Integrate seamlessly with our documentation site</li>
+<li>Stay in sync with code changes</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-solution">The Solution<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/springdoc-openapi-integration#the-solution" class="hash-link" aria-label="Direct link to The Solution" title="Direct link to The Solution" translate="no">​</a></h2>
+<p>We implemented SpringDoc OpenAPI for both microservices:</p>
+<div class="language-gradle codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-gradle codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'</span><br></span></code></pre></div></div>
+<p>This automatically generates OpenAPI 3.0 specifications at <code>/v3/api-docs</code> and provides Swagger UI at <code>/swagger-ui.html</code>.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="benefits">Benefits<a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/blog/springdoc-openapi-integration#benefits" class="hash-link" aria-label="Direct link to Benefits" title="Direct link to Benefits" translate="no">​</a></h2>
+<p>✅ <strong>Automatic Updates</strong> - Documentation stays in sync with code<br>
+<!-- -->✅ <strong>Interactive Testing</strong> - Try APIs directly from the browser<br>
+<!-- -->✅ <strong>Developer Experience</strong> - Easy to explore and understand APIs<br>
+<!-- -->✅ <strong>CI/CD Integration</strong> - Deployed automatically with GitHub Actions</p>
+<p>Check out our <a href="https://ejyke90.github.io/fintech-mapping-features/intelligentmappingpoc/docs/xml-sanitizer/overview">API Documentation</a> to see it in action!</p>]]></content:encoded>
+            <category>spring-boot</category>
+            <category>openapi</category>
+            <category>documentation</category>
+            <category>swagger</category>
+        </item>
+    </channel>
+</rss>
