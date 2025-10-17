@@ -15,7 +15,7 @@ A Python-based microservice for parsing and processing CSV files for financial d
 
 - Python 3.9+
 - pandas
-- Flask/FastAPI
+- FastAPI
 - python-dotenv
 
 ## Installation
