@@ -1,9 +1,9 @@
 {
   "branch": "intelligentMappingPoC",
-  "commit": "3ebbbcbabf77737e922ad98551ed53bce9f4c420",
-  "commit_short": "3ebbbcb",
-  "deployed_at": "2025-10-17T01:55:47Z",
+  "commit": "5478f088d4359b4279328a80e8514c09ecfbb47b",
+  "commit_short": "5478f08",
+  "deployed_at": "2025-10-17T01:58:27Z",
   "deployed_by": "Ejyke90",
-  "workflow_run": "18579960876",
+  "workflow_run": "18579999419",
   "base_url": "/fintech-mapping-features/intelligentmappingpoc/"
 }
