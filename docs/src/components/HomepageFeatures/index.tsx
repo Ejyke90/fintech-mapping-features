@@ -33,12 +33,13 @@ const FeatureList: FeatureItem[] = [
     ),
   },
   {
-    title: 'Spring Boot Microservices',
+    title: 'CSV Parser',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Built with modern Spring Boot 3.x architecture. Fully documented REST APIs
-        with OpenAPI/Swagger, containerized deployment, and comprehensive testing.
+        Python-powered CSV parsing and transformation. Auto-detect encodings, validate
+        structures, extract schemas, and transform data with ease. Perfect for
+        financial data ingestion and processing workflows.
       </>
     ),
   },
