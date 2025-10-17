@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  # CSV Parser Service (Python/FastAPI)
+  csv-parser:
+    build:
+      context: ./csv-parser
+      dockerfile: Dockerfile
+    container_name: csv-parser
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - CSV_MAX_FILE_SIZE=10485760
+    volumes:
+      - ./csv-parser/uploads:/app/uploads
+    networks:
+      - fintech-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # XML Sanitizer Service (Java/Spring Boot)
+  xml-sanitizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: xml-sanitizer
+    container_name: xml-sanitizer
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8080
+    networks:
+      - fintech-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Intelligent Mapping Generator Service (Java/Spring Boot)
+  mapping-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        MODULE: intelligent-mapping-generator
+    container_name: mapping-generator
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8081
+    networks:
+      - fintech-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # API Gateway/Orchestrator (Node.js/TypeScript)
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - CSV_PARSER_URL=http://csv-parser:8000
+      - XML_SANITIZER_URL=http://xml-sanitizer:8080
+      - MAPPING_GENERATOR_URL=http://mapping-generator:8081
+      - LOG_LEVEL=info
+    volumes:
+      - ./api-gateway/uploads:/app/uploads
+    networks:
+      - fintech-network
+    depends_on:
+      csv-parser:
+        condition: service_healthy
+      xml-sanitizer:
+        condition: service_healthy
+      mapping-generator:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  fintech-network:
+    driver: bridge
+
+volumes:
+  csv-uploads:
+  gateway-uploads:

@@ -45,21 +45,16 @@ fintech-mapping-features/
 
 ## Modules
 
-### 1. XML Sanitizer (Java/Spring Boot)
-- **Port**: 8080
-- **Purpose**: Sanitizes XML payloads by removing invalid characters
-- **Endpoint**: `POST /sanitize-chars`
-- **Package**: `com.fintech.sanitizer`
-- **Technology**: Java 21, Spring Boot 3.2.1
+### 1. API Gateway & Orchestrator (Node.js/TypeScript)
+- **Port**: 3000
+- **Purpose**: Orchestrate workflows across all microservices
+- **Endpoints**:
+  - `POST /api/v1/csv-to-xml` - CSV to XML transformation
+  - `POST /api/v1/csv-to-mapping` - Generate field mappings
+  - `POST /api/v1/transform-pipeline` - Full end-to-end pipeline
+- **Technology**: Node.js 20, TypeScript, Express
 
-### 2. Intelligent Mapping Generator (Java/Spring Boot)
-- **Port**: 8081
-- **Purpose**: Generates intelligent mappings for fintech data transformations
-- **Endpoint**: `POST /generate-mapping`
-- **Package**: `com.fintech.mapping`
-- **Technology**: Java 21, Spring Boot 3.2.1
-
-### 3. CSV Parser (Python/FastAPI)
+### 2. CSV Parser (Python/FastAPI)
 - **Port**: 8000
 - **Purpose**: Parse, validate, and transform CSV files
 - **Endpoints**: 
@@ -67,7 +62,23 @@ fintech-mapping-features/
   - `POST /api/csv/validate` - Validate CSV structure
   - `POST /api/csv/schema` - Extract schema information
   - `POST /api/csv/transform` - Clean and transform data
+  - `POST /api/csv/prepare-for-xml` - Prepare for XML conversion
+  - `POST /api/csv/prepare-for-mapping` - Prepare for mapping generation
 - **Technology**: Python 3.9+, FastAPI, Pandas
+
+### 3. XML Sanitizer (Java/Spring Boot)
+- **Port**: 8080
+- **Purpose**: Sanitizes XML payloads by removing invalid characters
+- **Endpoint**: `POST /sanitize-chars`
+- **Package**: `com.fintech.sanitizer`
+- **Technology**: Java 21, Spring Boot 3.2.1
+
+### 4. Intelligent Mapping Generator (Java/Spring Boot)
+- **Port**: 8081
+- **Purpose**: Generates intelligent mappings for fintech data transformations
+- **Endpoint**: `POST /generate-mapping`
+- **Package**: `com.fintech.mapping`
+- **Technology**: Java 21, Spring Boot 3.2.1
 
 ## Building the Project
 
@@ -89,17 +100,40 @@ fintech-mapping-features/
 
 ## Running the Services
 
-### Run XML Sanitizer (Port 8080)
+### Option 1: Docker Compose (Recommended)
+
+Run all services with a single command:
+
 ```bash
-./gradlew :xml-sanitizer:bootRun
+# Build and start all services
+docker-compose up --build
+
+# Start in detached mode
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
 ```
 
-### Run Intelligent Mapping Generator (Port 8081)
+Services will be available at:
+- API Gateway: http://localhost:3000
+- CSV Parser: http://localhost:8000
+- XML Sanitizer: http://localhost:8080
+- Mapping Generator: http://localhost:8081
+
+### Option 2: Run Individually
+
+#### Run API Gateway (Port 3000)
 ```bash
-./gradlew :intelligent-mapping-generator:bootRun
+cd api-gateway
+npm install
+npm run dev
 ```
 
-### Run CSV Parser (Port 8000)
+#### Run CSV Parser (Port 8000)
 ```bash
 cd csv-parser
 python3 -m venv venv
@@ -108,16 +142,14 @@ pip install -r requirements.txt
 python src/main.py
 ```
 
-### Run all services simultaneously (in separate terminals)
+#### Run XML Sanitizer (Port 8080)
 ```bash
-# Terminal 1 - XML Sanitizer
 ./gradlew :xml-sanitizer:bootRun
+```
 
-# Terminal 2 - Intelligent Mapping Generator
+#### Run Intelligent Mapping Generator (Port 8081)
+```bash
 ./gradlew :intelligent-mapping-generator:bootRun
-
-# Terminal 3 - CSV Parser
-cd csv-parser && source venv/bin/activate && python src/main.py
 ```
 
 ## Testing
@@ -163,21 +195,31 @@ Add common dependencies in the root `build.gradle` under the `subprojects` block
 
 ## API Examples
 
-### XML Sanitizer
+### Integrated Workflows (via API Gateway)
+
+#### Full Transformation Pipeline
 ```bash
-curl -X POST http://localhost:8080/sanitize-chars \
-  -H "Content-Type: application/xml" \
-  -d '<Sample>XML Data</Sample>'
+curl -X POST http://localhost:3000/api/v1/transform-pipeline \
+  -F "file=@payment_data.csv" \
+  -F "targetSchema=ISO20022_pain.001.001.09"
 ```
 
-### Intelligent Mapping Generator
+#### CSV to XML Transformation
 ```bash
-curl -X POST http://localhost:8081/generate-mapping \
-  -H "Content-Type: application/json" \
-  -d '{"source": "field1", "target": "field2"}'
+curl -X POST http://localhost:3000/api/v1/csv-to-xml \
+  -F "file=@payment_data.csv"
 ```
 
-### CSV Parser
+#### CSV to Mapping Generation
+```bash
+curl -X POST http://localhost:3000/api/v1/csv-to-mapping \
+  -F "file=@payment_data.csv" \
+  -F "targetSchema=ISO20022_pain.001.001.09"
+```
+
+### Direct Service Access
+
+#### CSV Parser
 ```bash
 # Parse a CSV file
 curl -X POST http://localhost:8000/api/csv/parse \
@@ -192,14 +234,30 @@ curl -X POST http://localhost:8000/api/csv/schema \
   -F "file=@data.csv"
 ```
 
+#### XML Sanitizer
+```bash
+curl -X POST http://localhost:8080/sanitize-chars \
+  -H "Content-Type: application/xml" \
+  -d '<Sample>XML Data</Sample>'
+```
+
+#### Intelligent Mapping Generator
+```bash
+curl -X POST http://localhost:8081/generate-mapping \
+  -H "Content-Type: application/json" \
+  -d '{"source": "field1", "target": "field2"}'
+```
+
 ## Documentation
 
 Full documentation is available at: [GitHub Pages Documentation](https://ejyke90.github.io/fintech-mapping-features/)
 
 ### Quick Links
+- [Integration Guide](INTEGRATION_GUIDE.md) - **⭐ Start Here for Integration Patterns**
+- [API Gateway Guide](api-gateway/README.md)
+- [CSV Parser Guide](docs/docs/csv-parser/overview.md)
 - [XML Sanitizer Guide](docs/docs/xml-sanitizer/overview.md)
 - [Intelligent Mapping Generator Guide](docs/docs/intelligent-mapping-generator/overview.md)
-- [CSV Parser Guide](docs/docs/csv-parser/overview.md)
 
 ## License
 [Add your license here]
