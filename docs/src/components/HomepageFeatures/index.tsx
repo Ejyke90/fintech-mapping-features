@@ -11,32 +11,34 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Intelligent Mapping Generator',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        AI-powered field mapping generation for ISO 20022 messages. Automatically
+        analyze and generate field mappings between different payment message formats
+        with confidence scoring and validation.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'XML Sanitization',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Clean and validate ISO 20022 XML messages with comprehensive sanitization.
+        Supports multiple message types including <code>pain.001</code>, <code>pacs.008</code>,
+        and CBPR+ standards.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Spring Boot Microservices',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Built with modern Spring Boot 3.x architecture. Fully documented REST APIs
+        with OpenAPI/Swagger, containerized deployment, and comprehensive testing.
       </>
     ),
   },
